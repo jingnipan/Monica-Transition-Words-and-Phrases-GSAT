@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>學測連接詞・轉折語練習</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--tx:#1d2433;--sub:#667085;--bd:#dfe3ec;--pri:#3b5bdb;--prit:#fff;--ok:#2f9e44;--okb:#e6f6ea;--no:#e03131;--nob:#fdeaea;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12151c;--card:#1c212c;--tx:#eef1f7;--sub:#9aa4b8;--bd:#2f3646;--pri:#7c93ff;--prit:#10131a;--ok:#69db7c;--okb:#16301e;--no:#ff8787;--nob:#3a1b1b}}
+:root[data-theme="dark"]{--bg:#12151c;--card:#1c212c;--tx:#eef1f7;--sub:#9aa4b8;--bd:#2f3646;--pri:#7c93ff;--prit:#10131a;--ok:#69db7c;--okb:#16301e;--no:#ff8787;--nob:#3a1b1b}
+html{color-scheme:light dark;scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.6 -apple-system,"Noto Sans TC","PingFang TC","Microsoft JhengHei",system-ui,sans-serif}
+main{max-width:720px;margin:0 auto;padding:20px 16px 48px}
+h1{font-size:1.5rem;margin:.2em 0}h2{font-size:1.05rem;margin:1.4em 0 .5em}
+.sub{color:var(--sub);font-size:.92rem}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin:12px 0}
+.modes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mode{cursor:pointer;text-align:left;background:var(--card);border:2px solid var(--bd);border-radius:12px;padding:12px;color:var(--tx);font:inherit}
+.mode b{display:block}.mode span{font-size:.82rem;color:var(--sub)}
+.mode.on{border-color:var(--pri)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:999px;padding:5px 13px;cursor:pointer;font:inherit;font-size:.9rem}
+.chip.on{background:var(--pri);color:var(--prit);border-color:var(--pri)}
+button.go,button.sec{font:inherit;border-radius:10px;padding:11px 20px;cursor:pointer;border:1px solid var(--pri)}
+button.go{background:var(--pri);color:var(--prit);font-weight:600;width:100%;margin-top:18px}
+button.sec{background:transparent;color:var(--pri)}
+.bar{height:6px;background:var(--bd);border-radius:9px;overflow:hidden;margin:8px 0 14px}.bar i{display:block;height:100%;background:var(--pri)}
+.hd{display:flex;justify-content:space-between;font-size:.9rem;color:var(--sub);flex-wrap:wrap;gap:6px}
+.q{font-size:1.5rem;font-weight:700;margin:6px 0 4px;line-height:1.4}
+.opts{display:grid;gap:10px;margin-top:14px}
+.opt{text-align:left;font:inherit;background:var(--card);color:var(--tx);border:2px solid var(--bd);border-radius:12px;padding:12px 14px;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--pri)}
+.opt.ok{background:var(--okb);border-color:var(--ok)}.opt.no{background:var(--nob);border-color:var(--no)}
+.fb{margin-top:12px;padding:10px 12px;border-radius:10px;font-size:.95rem}
+.fb.ok{background:var(--okb)}.fb.no{background:var(--nob)}
+.mt{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.mt .opt{padding:10px;font-size:.95rem}
+.opt.sel{border-color:var(--pri);background:color-mix(in srgb,var(--pri) 14%,var(--card))}
+.opt.done{opacity:.45;border-color:var(--ok)}
+.opt.bad{border-color:var(--no);background:var(--nob)}
+.big{font-size:3.2rem;font-weight:800;text-align:center;margin:0}
+.stats{display:flex;justify-content:space-around;text-align:center;margin:10px 0}
+.stats b{display:block;font-size:1.4rem}
+.wr{padding:8px 0;border-top:1px solid var(--bd);font-size:.95rem}
+.row{display:flex;gap:10px}.row>*{flex:1}
+select{font:inherit;padding:8px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--tx)}
+.rv details{background:var(--card);border:1px solid var(--bd);border-radius:12px;margin:8px 0;padding:0 14px}.rv summary{cursor:pointer;padding:11px 0;font-weight:600}.rv summary span{color:var(--sub);font-weight:400;font-size:.85rem}.rw{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid var(--bd);font-size:.95rem}.rw b{flex:0 0 46%}.rw i{font-style:normal;color:var(--sub);text-align:right}#srch{width:100%;font:inherit;padding:9px 12px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);margin-bottom:6px}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script>
+const RAW=`因果|Because|因為；由於
+因果|Since|因為；既然；自從
+因果|Now that|既然；由於現在
+因果|Seeing that|鑑於；考慮到
+因果|Given that|考慮到；鑑於
+因果|In that|因為；在於
+因果|Inasmuch as|因為；由於（正式）
+因果|Because of|因為；由於（接名詞）
+因果|Due to|由於；因為
+因果|Owing to|由於；因為（正式）
+因果|Thanks to|多虧；幸虧
+因果|On account of|由於；因為（正式）
+因果|As a result of|由於；因為
+因果|Result from|由⋯⋯造成；起因於
+因果|Result in|導致；造成
+因果|Lead to|導致；造成
+因果|Contribute to|促成；造成
+因果|Bring about|帶來；導致
+因果|Give rise to|引起；造成
+因果|Be responsible for|對⋯⋯負責；造成
+因果|Therefore|因此；所以
+因果|Thus|因此；因而
+因果|Hence|因此；所以（簡潔正式）
+因果|Consequently|因此；結果
+因果|Accordingly|因此；相應地
+因果|For this reason|基於這個原因
+因果|That is why|這就是⋯⋯的原因
+轉折|But|但是；然而
+轉折|Yet|然而；但是；可是
+轉折|However|然而；不過
+轉折|Nevertheless|然而；儘管如此
+轉折|On the contrary|相反地；恰恰相反
+轉折|In contrast|相較之下；相反地
+轉折|Conversely|反過來說
+轉折|On the other hand|另一方面
+轉折|Whereas|然而；反之
+轉折|Although|雖然；儘管
+轉折|Even though|即使；儘管
+轉折|Despite|儘管；即使（接名詞）
+轉折|In spite of|儘管；即使（接名詞）
+轉折|Regardless of|不管；不論
+轉折|Admittedly|誠然；不可否認
+轉折|That said|話雖如此
+轉折|Instead of|代替；而不是
+轉折|Rather than|而不是；而非
+轉折|Unlike|與⋯⋯不同
+轉折|Notwithstanding|儘管；即使（正式）
+附加|And|而且；並且
+附加|Also|也；此外
+附加|In addition|此外；另外
+附加|Additionally|此外；另外（正式）
+附加|Furthermore|此外；而且（正式）
+附加|Moreover|此外；而且（更強調）
+附加|What is more|而且；更重要的是
+附加|On top of that|除此之外
+附加|Not only that|不僅如此
+附加|Apart from|除了⋯⋯之外
+附加|In addition to|除了⋯⋯之外還
+附加|Along with|連同；以及
+附加|Together with|連同；一起
+附加|Similarly|同樣地；類似地
+附加|Likewise|同樣地；也
+附加|Equally important|同樣重要的是
+舉例|For example|舉例來說
+舉例|For instance|舉例來說（同義）
+舉例|Such as|例如；像是
+舉例|In particular|尤其；特別是
+舉例|Especially|尤其是
+舉例|To illustrate|舉例說明
+舉例|A case in point is|一個恰當的例子是
+舉例|In other words|換句話說
+舉例|Namely|也就是；即
+舉例|To be more specific|更具體地說
+舉例|In fact|事實上
+舉例|Indeed|確實；的確
+舉例|Above all|最重要的是
+舉例|Obviously|顯然
+舉例|Undoubtedly|毫無疑問
+舉例|For one thing|首先；其中一個原因是
+時間|When|當⋯⋯時
+時間|As soon as|一⋯⋯就⋯⋯
+時間|By the time|到⋯⋯時
+時間|Every time|每當
+時間|Until|直到
+時間|Meanwhile|同時；與此同時
+時間|In the meantime|在此期間
+時間|At first|起初
+時間|Initially|最初
+時間|First of all|首先
+時間|Afterward|之後
+時間|Subsequently|隨後
+時間|Eventually|最後；終於
+時間|In the end|最後；終究
+時間|At last|終於
+時間|Previously|先前
+時間|Formerly|從前；以前
+時間|Shortly after|在⋯⋯之後不久
+時間|Throughout|貫穿整個⋯⋯期間
+時間|During|在⋯⋯期間
+條件|Unless|除非；如果不
+條件|Provided that|假如；只要
+條件|As long as|只要
+條件|On condition that|條件是；只要
+條件|Only if|只有在⋯⋯的情況下
+條件|Whether or not|無論是否
+條件|In case|以防；萬一
+條件|In the event that|萬一；如果發生
+條件|Supposing that|假設；假如
+條件|Assuming that|假設；如果
+條件|Otherwise|否則；不然
+條件|What if|如果⋯⋯會怎麼樣？
+條件|As if|彷彿；好像
+條件|Were it not for|若不是因為
+條件|Had it not been for|若當時不是因為
+目的|So that|為了；以便
+目的|In order to|為了
+目的|So as to|為了
+目的|Lest|以免；唯恐
+目的|For fear that|唯恐；以免
+目的|For the purpose of|為了；以⋯⋯為目的
+目的|With a view to|為了；以⋯⋯為目的
+目的|Too ⋯ to|太⋯⋯而不能⋯⋯
+目的|Adj. + enough to|足夠⋯⋯可以⋯⋯
+目的|So ⋯ that|如此⋯⋯以致於
+比較|As ⋯ as|和⋯⋯一樣
+比較|Not nearly as ⋯ as|遠不如⋯⋯
+比較|Twice as ⋯ as|是⋯⋯的兩倍
+比較|Similar to|與⋯⋯相似
+比較|Different from|與⋯⋯不同
+比較|Compared with|與⋯⋯相比
+比較|The more ⋯, the more ⋯|越⋯⋯就越⋯⋯
+比較|No more than|僅僅；只有
+比較|No less than|多達；不少於
+比較|At least|至少
+比較|At most|至多
+比較|One of the + 最高級|最⋯⋯的其中之一
+比較|By far|遠遠（最⋯⋯）
+比較|Other than|除了⋯⋯之外；不同於
+總結|In conclusion|總而言之
+總結|To sum up|總結來說
+總結|In short|簡而言之
+總結|All in all|總而言之
+總結|Overall|整體而言
+總結|On the whole|大體而言
+總結|In general|一般來說
+總結|Ultimately|最終；歸根究柢
+總結|In the long run|長遠來看
+總結|After all|畢竟；終究
+觀點|In my opinion|在我看來
+觀點|From my point of view|從我的觀點來看
+觀點|As far as I am concerned|就我而言
+觀點|Personally|就我個人而言
+觀點|It is widely believed that|普遍認為⋯⋯
+觀點|According to|根據⋯⋯
+觀點|Based on|根據⋯⋯（依據）
+觀點|With regard to|關於；就⋯⋯而言
+觀點|As for|至於
+觀點|Speaking of|說到⋯⋯
+觀點|When it comes to|談到；說到
+觀點|In terms of|就⋯⋯而言`;
+const SR=`因果|___ it rained heavily, the game was cancelled.|Because|Although|Unless|Until
+因果|___ the heavy rain, the game was cancelled.|Because of|Although|Unless|Whereas
+因果|He studied hard; ___, he passed the exam with high marks.|therefore|however|instead|otherwise
+因果|___ you have finished your homework, you may watch TV.|Now that|Unless|Although|Lest
+因果|The accident ___ the driver’s carelessness.|resulted from|resulted in|gave up|brought up
+因果|Heavy smoking can ___ serious health problems.|lead to|result from|depend from|consist to
+轉折|She is shy; ___, her sister is very outgoing.|in contrast|therefore|for example|likewise
+轉折|___ he was tired, he kept working.|Although|Because|Unless|So that
+轉折|___ his poor health, he finished the marathon.|Despite|Although|Because|Unless
+轉折|Some people like cities; ___, others prefer the countryside.|on the other hand|for example|as a result|in addition
+轉折|He didn’t go out; ___, he stayed home and read.|instead|furthermore|likewise|indeed
+轉折|___ he might, he couldn’t open the door.|Try as|Unless|Whereas|Rather
+附加|The hotel is cheap. ___, it is close to the station.|Moreover|However|Otherwise|Instead
+附加|___ English, she speaks French and Japanese.|In addition to|Instead of|Regardless of|Unlike
+舉例|Many fruits are rich in vitamin C, ___ oranges and kiwis.|such as|even if|rather than|as if
+舉例|Fruit is healthy. ___, apples help lower the risk of heart disease.|In particular|In contrast|Otherwise|Nevertheless
+舉例|He is not rude; ___, he is just shy.|in fact|therefore|nevertheless|otherwise
+時間|___ I arrived at the station, the train had left.|By the time|Unless|Because of|Whereas
+時間|___ she heard the news, she burst into tears.|As soon as|Unless|Whereas|Even if
+時間|Wait here ___ I come back.|until|unless|although|so that
+時間|We were cooking; ___, the phone rang.|meanwhile|otherwise|instead|likewise
+時間|___, he didn’t like the job, but later he got used to it.|At first|In conclusion|On the contrary|Otherwise
+時間|___, she finished the project after months of effort.|Eventually|Namely|Conversely|Likewise
+條件|You will fail ___ you study harder.|unless|although|whereas|so that
+條件|You may borrow my car ___ you drive carefully.|as long as|even though|in spite of|rather than
+條件|Take an umbrella ___ it rains.|in case|owing to|whereas|as though
+條件|Hurry up; ___, you will miss the bus.|otherwise|moreover|for example|similarly
+條件|___ I known the truth, I would have told you.|Had|Were|Should|Unless
+條件|___ it not been for your help, I would have failed.|Had|Were|Should|Did
+條件|He speaks ___ he were the boss.|as if|as long as|even though|whereas
+目的|He saved money ___ he could buy a new bike.|so that|even though|as if|unless
+目的|She left early ___ catch the first train.|so as to|in spite of|in case of|owing to
+目的|The box was ___ heavy that I couldn’t lift it.|so|such|too|enough
+比較|The more you practice, ___ you become.|the better|better|the best|best
+比較|He is ___ the tallest player on the team.|by far|by then|by case|by the way
+總結|We discussed three plans. ___, we chose the second one.|In the end|Furthermore|In contrast|For instance
+觀點|___, I think we should leave now.|In my opinion|In contrast|As a result|Namely
+觀點|___ the report, sales rose by 10%.|According to|Regardless of|Instead of|In case of
+觀點|___ his health, he is doing much better.|With regard to|In case of|Instead of|Rather than`;
+const D=RAW.trim().split("\n").map(l=>{const[c,e,z]=l.split("|");return{c,e,z}});
+const S=SR.trim().split("\n").map(l=>{const[c,s,a,...d]=l.split("|");return{c,s,a,d}});
+const CATS=[...new Set(D.map(x=>x.c))];
+const MODES={mix:["綜合測驗","三種題型隨機出"],mc:["中英選擇","看英文選中文、看中文選英文"],fill:["句子填空","選出最適合的連接詞"],match:["配對題","把英文和中文配成對"]};
+const sh=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.random()*(i+1)|0;[a[i],a[j]]=[a[j],a[i]]}return a};
+const $=s=>document.querySelector(s);
+let mode="mix",cats=new Set(CATS),N=10,G=null;
+let best={};try{best=JSON.parse(localStorage.getItem("tw_best")||"{}")}catch(e){}
+const saveBest=()=>{try{localStorage.setItem("tw_best",JSON.stringify(best))}catch(e){}};
+
+function home(){
+ $("#app").innerHTML=`<h1>✏️ 學測連接詞・轉折語練習</h1><div class="sub">共 ${D.length} 組單字片語、${S.length} 題填空，每天練幾分鐘就有感。</div>
+ <h2>1. 選擇題型</h2><div class="modes">${Object.entries(MODES).map(([k,v])=>`<button class="mode ${k===mode?"on":""}" data-m="${k}"><b>${v[0]}</b><span>${v[1]}</span>${best[k]!=null?`<span><br>最佳：${best[k]} 分</span>`:""}</button>`).join("")}</div>
+ <h2>2. 選擇範圍</h2><div class="chips"><button class="chip ${cats.size===CATS.length?"on":""}" data-c="all">全部</button>${CATS.map(c=>`<button class="chip ${cats.has(c)&&cats.size<CATS.length?"on":""}" data-c="${c}">${c}</button>`).join("")}</div>
+ <h2>3. 題數</h2><select id="n">${[5,10,20,30].map(n=>`<option ${n===N?"selected":""}>${n}</option>`).join("")}</select> <span class="sub">題（配對題 5 組為一回合）</span>
+ <button class="go" id="start">開始練習</button>
+ <div class="card sub" style="margin-top:22px">計分：答對 +10 分；連續答對 3 題起每題加分（最高 +4）。配對題一次就配對成功才得分。</div>
+ <h2>📖 考前複習：單字片語總表（${D.length} 組）</h2><input id="srch" placeholder="搜尋英文或中文…"><div class="rv" id="rv">${CATS.map(c=>{const a=D.filter(x=>x.c===c);return`<details><summary>${c} <span>${a.length} 組</span></summary>${a.map(x=>`<div class="rw"><b>${x.e}</b><i>${x.z}</i></div>`).join("")}</details>`}).join("")}</div>`;
+ document.querySelectorAll(".mode").forEach(b=>b.onclick=()=>{mode=b.dataset.m;home()});
+ document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{const c=b.dataset.c;if(c==="all")cats=new Set(CATS);else{if(cats.size===CATS.length)cats=new Set([c]);else cats.has(c)?cats.delete(c):cats.add(c);if(!cats.size)cats=new Set(CATS)}home()});
+ $("#n").onchange=e=>N=+e.target.value;
+ $("#start").onclick=start;
+ $("#srch").oninput=e=>{const v=e.target.value.trim().toLowerCase();document.querySelectorAll("#rv details").forEach(d=>{let n=0;d.querySelectorAll(".rw").forEach(r=>{const m=!v||r.textContent.toLowerCase().includes(v);r.style.display=m?"":"none";if(m)n++});d.style.display=n?"":"none";d.open=!!v&&n>0})};
+}
+const pool=()=>D.filter(x=>cats.has(x.c));
+function cyc(a,n){let r=[];while(r.length<n)r=r.concat(sh(a));return r.slice(0,n)}
+function genMC(it){const dir=Math.random()<.5;const ds=sh(D.filter(x=>x.c!==it.c&&x.z!==it.z)).slice(0,3);return{t:"mc",dir,it,opts:sh([it,...ds])}}
+function genFill(s){return{t:"fill",s,opts:sh([s.a,...s.d])}}
+function genMatch(){const p=sh(pool());const seen=new Set(),pick=[];for(const x of p){if(!seen.has(x.c)&&!pick.some(y=>y.z===x.z)){seen.add(x.c);pick.push(x)}if(pick.length===5)break}
+ for(const x of p){if(pick.length>=5)break;if(!pick.includes(x)&&!pick.some(y=>y.z===x.z))pick.push(x)}
+ return{t:"match",pairs:pick,right:sh(pick.map((_,i)=>i)),sel:null,done:new Set(),first:new Set(pick.map((_,i)=>i)),flash:null}}
+function start(){
+ const P=pool(),SS=S.filter(x=>cats.has(x.c));const fp=SS.length?SS:S;
+ let qs=[];
+ if(mode==="mc")qs=cyc(P,N).map(genMC);
+ else if(mode==="fill")qs=cyc(fp,N).map(genFill);
+ else if(mode==="match")qs=Array.from({length:Math.max(1,Math.round(N/5))},genMatch);
+ else{const a=cyc(P,N),b=cyc(fp,N);qs=a.map((x,i)=>{const r=Math.random();return r<.4?genMC(x):r<.8?genFill(b[i]):genMatch()});const m=qs.filter(q=>q.t==="match");if(m.length>2){let k=0;qs=qs.filter(q=>q.t!=="match"||++k<=2)}}
+ G={qs,i:0,score:0,streak:0,ok:0,tot:0,wrong:[]};show();
+}
+function hdr(){const pct=G.i/G.qs.length*100;return`<div class="hd"><span>第 ${G.i+1} / ${G.qs.length} 題</span><span>🔥 連對 ${G.streak}</span><b>分數 ${G.score}</b></div><div class="bar"><i style="width:${pct}%"></i></div>`}
+function award(ok){if(ok){G.streak++;G.ok++;G.tot++;const p=10+(G.streak>=3?Math.min(G.streak-2,4):0);G.score+=p;return p}G.streak=0;G.tot++;return 0}
+function show(){
+ if(G.i>=G.qs.length)return result();
+ const q=G.qs[G.i];
+ if(q.t==="match")return renderMatch();
+ let body;
+ if(q.t==="mc"){const L=q.dir;body=`<div class="sub">${L?"選出正確的中文意思":"選出正確的英文"}</div><div class="q">${L?q.it.e:q.it.z}</div><div class="opts">${q.opts.map((o,k)=>`<button class="opt" data-k="${k}">${L?o.z:o.e}</button>`).join("")}</div>`}
+ else body=`<div class="sub">選出最適合填入空格的字詞</div><div class="q" style="font-size:1.25rem">${q.s.s.replace("___","<u>　　　　</u>")}</div><div class="opts">${q.opts.map((o,k)=>`<button class="opt" data-k="${k}">${o}</button>`).join("")}</div>`;
+ $("#app").innerHTML=hdr()+`<div class="card">${body}<div id="fb"></div></div>`;
+ document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>pick(q,+b.dataset.k));
+}
+function pick(q,k){
+ if(q.done)return;q.done=1;
+ const isOk=q.t==="mc"?q.opts[k]===q.it:q.opts[k]===q.s.a;
+ const p=award(isOk);
+ const btns=document.querySelectorAll(".opt");btns.forEach((b,j)=>{b.disabled=true;const right=q.t==="mc"?q.opts[j]===q.it:q.opts[j]===q.s.a;if(right)b.classList.add("ok");else if(j===k)b.classList.add("no")});
+ let info;
+ if(q.t==="mc")info=`<b>${q.it.e}</b>：${q.it.z}`;
+ else{const m=D.find(x=>x.e.toLowerCase()===q.s.a.toLowerCase());info=`${q.s.s.replace("___","<b>"+q.s.a+"</b>")}${m?`<br>${m.e}：${m.z}`:""}`}
+ if(!isOk)G.wrong.push(q.t==="mc"?`${q.it.e}：${q.it.z}`:q.s.s.replace("___","<b>"+q.s.a+"</b>"));
+ $("#fb").innerHTML=`<div class="fb ${isOk?"ok":"no"}">${isOk?`✅ 答對了！+${p} 分`:"❌ 再接再厲"}<br>${info}</div><button class="go" id="nx">${G.i+1>=G.qs.length?"看成績":"下一題"}</button>`;
+ $("#nx").onclick=()=>{G.i++;show()};
+ const sc=document.querySelector(".hd b");if(sc)sc.textContent="分數 "+G.score;
+}
+function renderMatch(){
+ const q=G.qs[G.i],all=q.done&&q.done===5;
+ const fl=q.flash;
+ $("#app").innerHTML=hdr()+`<div class="card"><div class="sub">點一個英文，再點對應的中文（共 5 組）</div><div class="mt"><div class="opts" style="margin:0">${q.pairs.map((p,i)=>`<button class="opt ${q.done instanceof Set?"":""}${q.dn&&q.dn.has(i)?"done":""} ${q.sel===i?"sel":""} ${fl&&fl[0]===i?"bad":""}" data-l="${i}">${p.e}</button>`).join("")}</div><div class="opts" style="margin:0">${q.right.map(i=>`<button class="opt ${q.dn&&q.dn.has(i)?"done":""} ${fl&&fl[1]===i?"bad":""}" data-r="${i}">${q.pairs[i].z}</button>`).join("")}</div></div><div id="fb"></div></div>`;
+ if(q.dn&&q.dn.size===5){$("#fb").innerHTML=`<div class="fb ok">🎉 本回合完成！</div><button class="go" id="nx">${G.i+1>=G.qs.length?"看成績":"下一回合"}</button>`;$("#nx").onclick=()=>{G.i++;show()};return}
+ document.querySelectorAll("[data-l]").forEach(b=>b.onclick=()=>{const i=+b.dataset.l;if(q.dn&&q.dn.has(i))return;q.sel=i;renderMatch()});
+ document.querySelectorAll("[data-r]").forEach(b=>b.onclick=()=>{
+  const r=+b.dataset.r;if(q.sel==null||(q.dn&&q.dn.has(r)))return;
+  q.dn=q.dn||new Set();const l=q.sel;
+  if(l===r){const first=q.first.has(l);q.dn.add(l);q.sel=null;if(first){G.ok++;G.tot++;G.score+=10;G.streak++}else{G.tot++}
+   const sc=document.querySelector(".hd b");renderMatch()}
+  else{if(q.first.has(l)){q.first.delete(l);G.wrong.push(`${q.pairs[l].e}：${q.pairs[l].z}`);G.streak=0}q.flash=[l,r];q.sel=null;renderMatch();setTimeout(()=>{q.flash=null;if(G.qs[G.i]===q)renderMatch()},500)}
+ });
+}
+function result(){
+ const acc=G.tot?Math.round(G.ok/G.tot*100):0;
+ const g=acc>=90?["S","太強了！"]:acc>=75?["A","很穩！"]:acc>=60?["B","再加強一點"]:["C","多練幾次一定會進步"];
+ const nb=best[mode]==null||G.score>best[mode];if(nb){best[mode]=G.score;saveBest()}
+ const uw=[...new Set(G.wrong)];
+ $("#app").innerHTML=`<h1>練習完成</h1><div class="card"><p class="big">${g[0]}</p><p style="text-align:center;margin:0">${g[1]}${nb?" 🏆 新紀錄！":""}</p>
+ <div class="stats"><div><b>${G.score}</b><span class="sub">總分</span></div><div><b>${acc}%</b><span class="sub">正確率</span></div><div><b>${G.ok}/${G.tot}</b><span class="sub">答對</span></div></div></div>
+ ${uw.length?`<h2>錯題複習（${uw.length}）</h2><div class="card">${uw.map(w=>`<div class="wr">${w}</div>`).join("")}</div>`:`<div class="card">全部答對，沒有錯題 🎉</div>`}
+ <div class="row" style="margin-top:14px"><button class="go" id="again" style="margin:0">再練一次</button><button class="sec" id="hm">回首頁</button></div>`;
+ $("#again").onclick=start;$("#hm").onclick=home;
+}
+home();
+</script>
+</body>
+</html>
